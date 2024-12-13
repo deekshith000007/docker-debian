@@ -1,0 +1,14 @@
+---
+- name: Check if Docker is installed
+  ansible.builtin.package_facts:
+
+- name: Install Docker on Amazon Linux
+  ansible.builtin.dnf:
+    name: docker
+    state: present
+  when:
+    - ansible_os_family == "RedHat"
+    - "'docker' not in ansible_facts.packages"
+  notify:
+    - ensure docker service
+
